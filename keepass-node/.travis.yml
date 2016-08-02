@@ -1,0 +1,8 @@
+sudo: false
+language: node_js
+node_js:
+  - "4"
+#before_install:
+#  - sudo apt-get update
+#  - sudo apt-get install -qq -y libcrypto++-dev
+after_script: npm run coverage && npm run coverage:publish
