@@ -1,0 +1,17 @@
+<!-- BEGIN SIDEBAR -->
+<div ng-include src=" '../backApp/common/partial/common.sidebar/common.sidebar.html' " include-replace>
+</div>
+<!-- END SIDEBAR -->
+<div class="page-container" >
+	<!-- BEGIN HEADER -->
+	<div ng-include src=" '../backApp/common/partial/common.header/common.header.html' " include-replace>
+	</div>
+	<!-- END HEADER -->
+
+	<!-- COMMON LAYOUT -->
+	<div class="page-content-wrapper full-height" >
+		<div class="full-height full-width" ui-view>
+		</div>
+	</div>
+</div>
+<!-- END COMMON LAYOUT -->

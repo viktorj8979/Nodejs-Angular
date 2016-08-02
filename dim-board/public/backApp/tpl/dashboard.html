@@ -1,0 +1,167 @@
+<div class="dashboard-container container-fluid container-fixed-lg" ng-class="{'inverted': dashboard.settings.invertColors}">
+    
+    <div class="m-t-10">
+        <h3 class="page-title pull-left" ng-bind="dashboard.title"></h3>
+        <div class="header-actions pull-left">
+            <ul class="list-inline">
+                <li tooltip="delete" tooltip-placement="bottom">
+                    <div ng-click="deleteDashboard();" class="thumbnail-wrapper d32 circular b-white">
+                        <div class="bg-danger text-center text-white">
+                            <span>
+                                <i class="fa fa-trash-o"></i>
+                            </span>
+                        </div>
+                    </div>
+                </li>
+                <li tooltip="save" tooltip-placement="bottom">
+                    <div ng-click="saveDashboard();" class="thumbnail-wrapper d32 circular b-white">
+                        <div class="bg-success text-center text-white">
+                            <span>
+                                <i class="fa fa-check"></i>
+                            </span>
+                        </div>
+                    </div>
+                </li>
+                <li tooltip="add" tooltip-placement="bottom" data-toggle="quickview" data-toggle-element="#addCardView">
+                    <div class="thumbnail-wrapper d32 circular b-white">
+                        <div class="bg-primary text-center text-white">
+                            <span>
+                                <i class="fa fa-plus"></i>
+                            </span>
+                        </div>
+                    </div>
+                </li>
+                <li tooltip="settings" tooltip-placement="bottom" data-toggle="quickview" data-toggle-element="#dashboardSettings">
+                    <div class="thumbnail-wrapper d32 circular b-white">
+                        <div class="bg-master text-center text-white">
+                            <span>
+                                <i class="pg-settings"></i>
+                            </span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div ng-show="dashboard.settings.showMembers" class="dashboard-members pull-right">
+            <ul class="list-unstyled">
+                <li>
+                    <div class="thumbnail-wrapper d32 circular b-white b-a b-white">
+                        <img width="35" height="35" ui-jq="unveil" data-src-retina="../backApp/assets/img/profiles/1x.jpg" data-src="../backApp/assets/img/profiles/1.jpg" alt="Profile Image" src="../backApp/assets/img/profiles/1x.jpg">
+                    </div>
+                </li>
+                <li>
+                    <div class="thumbnail-wrapper d32 circular b-white b-a b-white">
+                        <img width="35" height="35" ui-jq="unveil" data-src-retina="../backApp/assets/img/profiles/2x.jpg" data-src="../backApp/assets/img/profiles/2.jpg" alt="Profile Image" src="../backApp/assets/img/profiles/2x.jpg">
+                    </div>
+                </li>
+                <li>
+                <div class="thumbnail-wrapper d32 circular b-white b-a b-white">
+                <img width="35" height="35" ui-jq="unveil" data-src-retina="../backApp/assets/img/profiles/3x.jpg" data-src="../backApp/assets/img/profiles/3.jpg" alt="Profile Image" src="../backApp/assets/img/profiles/3x.jpg">
+                </div>
+                </li>
+                <li>
+                <div class="thumbnail-wrapper d32 circular b-white b-a b-white">
+                <img width="35" height="35" ui-jq="unveil" data-src-retina="../backApp/assets/img/profiles/4x.jpg" data-src="../backApp/assets/img/profiles/4.jpg" alt="Profile Image" src="../backApp/assets/img/profiles/4x.jpg">
+                </div>
+                </li>
+                <li>
+                <div class="thumbnail-wrapper d32 circular b-white b-a b-white">
+                <img width="35" height="35" ui-jq="unveil" data-src-retina="../backApp/assets/img/profiles/5x.jpg" data-src="../backApp/assets/img/profiles/5.jpg" alt="Profile Image" src="../backApp/assets/img/profiles/5x.jpg">
+                </div>
+                </li>
+                <li>
+                <div class="thumbnail-wrapper d32 circular b-white b-a b-white">
+                <img width="35" height="35" ui-jq="unveil" data-src-retina="../backApp/assets/img/profiles/6x.jpg" data-src="../backApp/assets/img/profiles/6.jpg" alt="Profile Image" src="../backApp/assets/img/profiles/6x.jpg">
+                </div>
+                </li>
+                <li>
+                    <div class="thumbnail-wrapper d32 circular b-white b-a b-white">
+                        <img width="35" height="35" ui-jq="unveil" data-src-retina="../backApp/assets/img/profiles/7x.jpg" data-src="../backApp/assets/img/profiles/7.jpg" alt="Profile Image" src="../backApp/assets/img/profiles/7x.jpg">
+                    </div>
+                </li>
+                <li>
+                    <div class="thumbnail-wrapper d32 circular b-white">
+                        <div class="bg-master text-center text-white">
+                            <span>+34</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    <!-- START ROW -->
+    <div class="row">
+        <div class="col-md-12">
+            <div gridster="gridsterOpts">
+                <ul>
+                    <li gridster-item="card" ng-repeat="card in dashboard.cards" ng-style="card.style">
+                        
+                        <!-- METRIC CARD -->
+                        <div ng-class="card.settings.classes" class="widget-{{ card.widget }} panel no-border no-margin" pg-portlet progress="{{ card.settings.progress }}" overlay-color="{{ card.settings.overlay.color }}" overlay-opacity="{{ card.settings.overlay.opacity }}" on-refresh="refreshTest('.widget-1')" dynamic="card.elem">
+                        </div>
+                        <div class="utility-bar" ng-show="dashboard.settings.showCardFooters">
+                            <div tooltip="{{ card.created_by.name }}" class="thumbnail-wrapper d32 circular b-white b-a b-white pull-left">
+                                <img width="35" height="35" ui-jq="unveil" data-src-retina="{{ card.created_by.picture }}" data-src="{{ card.created_by.picture }}" alt="{{ card.created_by.name }}" src="{{ card.created_by.picture }}">
+                            </div>
+                            <ul class="list-inline pull-right">
+                                <li>
+                                    <!-- START Card Link -->
+                                    <div class="btn-group dropup" dropdown keyboard-nav>
+                                        <button id="linkCards" type="button" class="btn text-master hint-text" dropdown-toggle>
+                                            <span tooltip="links">0 <i class="fa fa-chain-broken"></i></span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="linkCards">
+                                            <li role="menuitem"><a href="#">Link Cards</a></li>
+                                            <li role="menuitem"><a href="#">Unlink Cards</a></li>
+                                        </ul>
+                                    </div>
+                                    <!-- END Card Link -->
+                                </li>
+                                <li tooltip="alerts">
+                                    <a class="text-master hint-text" href="">{{ card.alerts.length }} 
+                                        <i class="fa fa-bell-o"></i>
+                                    </a>
+                                </li>
+                                <li ng-click="selectCard(card);" data-toggle="quickview" data-toggle-element="#cardCommentView" tooltip="comments">
+                                    <a class="text-master hint-text" href="">{{ card.comments.length }} 
+                                        <i class="fa fa-comment-o"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <img class="data-source-icon" src="{{ card.data.source.picture }}" />
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+
+                       <!--  <div class="tile-container">
+                            <div ng-if="tile.chartConfig" class="grid-chart-container">
+                                <high-charts chart-config="tile.chartConfig"></high-charts>
+                            </div> -->
+                            <!-- Top menu -->
+                            <!-- <span class="tile-settings">
+                                <ul class="list-inline">
+                                    <li ng-show="tile.text" tooltip="Edit" ng-click="editText(tile)">
+                                        <span class="ti-smallcap"></span>
+                                    </li>
+                                    <li ng-show="tile.chartConfig" tooltip="Edit" ng-click="editChart(tile)">
+                                        <span class="ti-pie-chart"></span>
+                                    </li>
+                                    <li tooltip="Delete" ng-click="deleteTile(tile)">
+                                        <span class="ti-trash"></span>
+                                    </li>
+                                    <li tooltip="Settings" ng-click="openTileSettings(tile)">
+                                        <span class="ti-settings"></span>
+                                    </li>
+                                </ul>
+                            </span> -->
+                            <!-- Corner stretch icon -->
+                            <!-- <span class="ti-arrows-corner"></span>
+                        </div> -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- END ROW -->
+</div>
+<!-- END CONTAINER FLUID

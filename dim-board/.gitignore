@@ -1,0 +1,10 @@
+.idea/
+*.log
+node_modules/
+public/backApp/lib
+*/**/.DS_Store
+.DS_Store
+node_modules
+.env
+.build
+

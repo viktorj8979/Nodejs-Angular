@@ -1,0 +1,45 @@
+<div ng-controller="CardsViewCtrl" id="cardView" class="quickview-wrapper" pg-quickview>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs">
+
+  </ul>
+  <a class="btn-link quickview-toggle" data-toggle-element="#cardView" data-toggle="quickview"><i class="pg-close"></i></a>
+  <div class="panel">
+    <div class="panel-heading">
+      <div class="panel-title word-break">{{$parent.viewCard.title}}</div>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-sm-12">
+          <form id="form-work" class="form-horizontal ng-pristine ng-invalid ng-invalid-required" role="form" autocomplete="off" name="work" novalidate="">
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Created By</label>
+              <div class="col-sm-8">
+                <p>{{$parent.viewCard.created_by.first_name}} {{$parent.viewCard.created_by.last_name}}</p>
+                <p class="hint-text small"><i class="ti-time"></i> {{ $parent.viewCard.created_on | date:'medium'}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Modified By</label>
+              <div class="col-sm-8">
+                <p>{{$parent.viewCard.modified_by.first_name}} {{$parent.viewCard.modified_by.last_name}}</p>
+                <p class="hint-text small"><i class="ti-time"></i> {{ $parent.viewCard.modified_on | date:'medium'}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Datasources</label>
+              <div class="col-sm-8">
+                <p class="word-break">{{$parent.viewCard.datasources.length}} Datasources</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-8 col-sm-push-4">
+                <a href="" ng-click="viewCard($parent.viewCard._id)">View Card</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

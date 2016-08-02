@@ -1,0 +1,99 @@
+<div class="quickview-wrapper builder hidden-sm hidden-xs" id="dashboardSettings" ng-class="{ 'open' : includes('app.builder') }">
+    <div class="p-l-30 p-r-30 ">
+        <a class="builder-close quickview-toggle pg-close" data-toggle="quickview" data-toggle-element="#dashboardSettings" href=""></a>
+        <ul class="nav nav-tabs nav-tabs-simple nav-tabs-primary m-t-10">
+            <li class="active">
+                <a data-toggle="tab" href="#tabLayouts" pg-tab>Settings</a>
+            </li>
+            <li>
+                <a data-toggle="tab" href="#tabThemes" pg-tab>Design</a>
+            </li>
+            <li>
+                <a data-toggle="tab" href="#tabContent" pg-tab>Share</a>
+            </li>
+        </ul>
+        <div class="tab-content m-b-30 p-l-30">
+            <div class="tab-pane active " id="tabLayouts">
+                <div class="scrollable">
+                    <div class="p-l-10 p-r-50">
+                        <form id="form-work" class="form-horizontal ng-pristine ng-invalid ng-invalid-required" role="form" autocomplete="off" name="work" novalidate="">
+                            <div class="form-group">
+                                <label for="title" class="col-sm-3 control-label">Title</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" id="title" placeholder="Dashboard Title" name="title" ng-model="dashboard.title">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Card Footers</label>
+                                <div class="col-sm-9">
+                                    <div class="radio radio-success">
+                                        <input type="radio" ng-checked="dashboard.settings.showCardFooters === true" ng-click="dashboard.settings.showCardFooters = true;" id="showCardFooters" ng-model="dashboard.settings.showCardFooters" class="ng-pristine ng-untouched ng-valid">
+                                        <label for="showCardFooters">Show</label>
+                                        <input type="radio" id="hideCardFooters" ng-checked="dashboard.settings.showCardFooters === false" ng-click="dashboard.settings.showCardFooters = false;" ng-model="dashboard.settings.showCardFooters" class="ng-pristine ng-untouched ng-valid">
+                                        <label for="hideCardFooters">Hide</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Members</label>
+                                <div class="col-sm-9">
+                                    <div class="radio radio-success">
+                                        <input type="radio" ng-checked="dashboard.settings.showMembers === true" ng-click="dashboard.settings.showMembers = true;" id="showMembers" ng-model="dashboard.settings.showMembers" class="ng-pristine ng-untouched ng-valid">
+                                        <label for="showMembers">Show</label>
+                                        <input type="radio" id="hideMembers" ng-checked="dashboard.settings.showMembers === false" ng-click="dashboard.settings.showMembers = false;" ng-model="dashboard.settings.showMembers" class="ng-pristine ng-untouched ng-valid">
+                                        <label for="hideMembers">Hide</label>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane " id="tabThemes" ng-class="{ 'active': !includes('app.builder') }">
+                <div class="scrollable full-height">
+                    <div class="p-l-10 p-r-50">
+                        <form id="form-work" class="form-horizontal ng-pristine ng-invalid ng-invalid-required" role="form" autocomplete="off" name="work" novalidate="">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Invert Colors</label>
+                                <div class="col-sm-9">
+                                    <div class="radio radio-success">
+                                        <input type="radio" ng-checked="dashboard.settings.invertColors === true" ng-click="dashboard.settings.invertColors = true;" id="invertColors" ng-model="dashboard.settings.invertColors" class="ng-pristine ng-untouched ng-valid">
+                                        <label for="invertColors">Yes</label>
+                                        <input type="radio" id="doInvertColors" ng-checked="dashboard.settings.invertColors === false" ng-click="dashboard.settings.invertColors = false;" ng-model="dashboard.settings.invertColors" class="ng-pristine ng-untouched ng-valid">
+                                        <label for="doInvertColors">No</label>
+                                    </div>
+                                </div>
+                            </div>                    
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane " id="tabContent">
+                <div class="scrollable">
+                    <div class="p-l-10 p-r-50">
+                        <form id="form-work" class="form-horizontal ng-pristine ng-invalid ng-invalid-required" role="form" autocomplete="off" name="work" novalidate="">
+                            <div class="form-group">
+                                <label for="shareUrl" class="col-sm-3 control-label">url</label>
+                                <div class="col-sm-9">
+                                    <div class="word-break">
+                                        http://hearstcharts.com/view/dashboards/{{ dashboard._id }}
+                                    </div>
+                                    <button class="btn btn-complete btn-xs m-t-10">Copy</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="shareIframe" class="col-sm-3 control-label">iframe</label>
+                                <div class="col-sm-9">
+                                    <div class="word-break">
+                                        &lt;iframe src="http://hearstcharts.com/view/dashboards/{{ dashboard._id }}"&gt;&lt;/iframe&gt;
+                                    </div>
+                                    <button class="btn btn-complete btn-xs m-t-10">Copy</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

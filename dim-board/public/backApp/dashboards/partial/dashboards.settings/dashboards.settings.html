@@ -1,0 +1,177 @@
+<div ng-controller="DashboardsSettingsCtrl" class="quickview-wrapper builder hidden-sm hidden-xs" id="dashboardSettings" ng-class="{ 'open' : includes('app.builder'),'open' : openedSettingMenu }">
+    <div class="p-l-30 p-r-30 ">
+        <a class="builder-close quickview-toggle pg-close" data-toggle="quickview" data-toggle-element="#dashboardSettings" href=""></a>
+        <ul class="nav nav-tabs nav-tabs-simple nav-tabs-primary m-t-10">
+            <li class="active">
+                <a data-toggle="tab" href="#tabLayouts" pg-tab>Settings</a>
+            </li>
+            <li>
+                <a data-toggle="tab" href="#tabThemes" pg-tab>Design</a>
+            </li>
+            <li>
+                <a data-toggle="tab" href="#tabContent" pg-tab>Share</a>
+            </li>
+        </ul>
+        <div class="tab-content m-b-30 p-l-30">
+            <div class="tab-pane active " id="tabLayouts">
+                <div class="scrollable">
+                    <div class="p-l-10 p-r-50">
+                        <form id="form-work" class="form-horizontal ng-pristine ng-invalid ng-invalid-required" role="form" autocomplete="off" name="work" novalidate="">
+                            <div class="form-group">
+                                <label for="title" class="col-sm-3 control-label">Title</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" id="title" placeholder="Dashboard Title" name="title" ng-model="dashboard.title">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Card Footers</label>
+                                <div class="col-sm-9">
+                                    <div class="radio radio-success">
+                                        <input type="radio" ng-checked="dashboard.settings.showCardFooters === true" ng-click="dashboard.settings.showCardFooters = true;" id="showCardFooters" ng-model="dashboard.settings.showCardFooters" class="ng-pristine ng-untouched ng-valid">
+                                        <label for="showCardFooters">Show</label>
+                                        <input type="radio" id="hideCardFooters" ng-checked="dashboard.settings.showCardFooters === false" ng-click="dashboard.settings.showCardFooters = false;" ng-model="dashboard.settings.showCardFooters" class="ng-pristine ng-untouched ng-valid">
+                                        <label for="hideCardFooters">Hide</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Members</label>
+                                <div class="col-sm-9">
+                                    <div class="radio radio-success">
+                                        <input type="radio" ng-checked="dashboard.settings.showMembers === true" ng-click="dashboard.settings.showMembers = true;" id="showMembers" ng-model="dashboard.settings.showMembers" class="ng-pristine ng-untouched ng-valid">
+                                        <label for="showMembers">Show</label>
+                                        <input type="radio" id="hideMembers" ng-checked="dashboard.settings.showMembers === false" ng-click="dashboard.settings.showMembers = false;" ng-model="dashboard.settings.showMembers" class="ng-pristine ng-untouched ng-valid">
+                                        <label for="hideMembers">Hide</label>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane " id="tabThemes" ng-class="{ 'active': !includes('app.builder') }">
+                <div class="scrollable">
+                    <div class="p-l-10 p-r-50">
+                        <form id="form-theme" class="form-horizontal ng-pristine ng-invalid ng-invalid-required" role="form" autocomplete="off" name="Form.thme" novalidate="">
+                            <span ng-click="createNewTheme();" ng-hide="newThemeCreation || themeUpdation" class="new-theme-action">Create new Theme</span>
+                            <span ng-click="cancelThemeCostumization();" ng-show="newThemeCreation || themeUpdation" class="new-theme-action back">Back</span>
+                            <div ng-hide="newThemeCreation || themeUpdation" >
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Theme</label>
+                                    <div class="col-sm-9">
+                                        <select ng-model="dashboard.settings.theme" class="form-control" ng-options="theme as theme.name group by groupThemes(theme.core_theme) for theme in themes track by theme._id"></select>
+                                        <button ng-click="editTheme()" ng-show="dashboard.settings.theme.core_theme === 'false'" class="btn btn-default edit-theme-btn" ><i class="glyphicon glyphicon-pencil"></i></button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Card Theme</label>
+                                    <div class="col-sm-9">
+                                        <select ng-model="dashboard.settings.cardsTheme" class="form-control" ng-options="theme as theme.name group by groupThemes(theme.core_theme) for theme in themes track by theme._id"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-if="newThemeCreation || themeUpdation" >
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label req-field">Name</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="name" ng-model="dashboard.settings.newTheme.name" placeholder="Enter thme name" class="form-control validate-err" required>
+                                        <div ng-show="Form.thme.name.$dirty && Form.thme.name.$invalid" role="alert">
+                                            <small class="error" ng-show="Form.thme.name.$error.required">This field is required</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Invert Colors</label>
+                                    <div class="col-sm-9">
+                                        <div class="radio radio-success">
+                                            <input type="radio" ng-checked="dashboard.settings.newTheme.data.invert_color === true" ng-click="dashboard.settings.newTheme.data.invert_color = true;" id="invertColors" ng-model="dashboard.settings.newTheme.data.invert_color" class="ng-pristine ng-untouched ng-valid">
+                                            <label for="invertColors">Yes</label>
+                                            <input type="radio" id="doInvertColors" ng-checked="dashboard.settings.newTheme.data.invert_color === false" ng-click="dashboard.settings.newTheme.data.invert_color = false;" ng-model="dashboard.settings.newTheme.data.invert_color" class="ng-pristine ng-untouched ng-valid">
+                                            <label for="doInvertColors">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Color</label>
+                                    <div class="col-sm-9">
+                                        <color-picker
+                                            ng-model="dashboard.settings.newTheme.data.color"
+                                            color-picker-format="'rgb'"
+                                            color-picker-alpha="true"
+                                            color-picker-swatch="true"
+                                            color-picker-swatch-bootstrap="false"
+                                        ></color-picker>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">BG color</label>
+                                    <div class="col-sm-9">
+                                        <color-picker
+                                            ng-model="dashboard.settings.newTheme.data.background_color"
+                                            color-picker-format="'rgb'"
+                                            color-picker-alpha="true"
+                                            color-picker-swatch="true"
+                                            color-picker-swatch-bootstrap="false"
+                                        ></color-picker>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">BG image</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" ng-model="dashboard.settings.newTheme.data.background_image" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Border color</label>
+                                    <div class="col-sm-9">
+                                        <color-picker
+                                            ng-model="dashboard.settings.newTheme.data.border_color"
+                                            color-picker-format="'rgb'"
+                                            color-picker-alpha="true"
+                                            color-picker-swatch="true"
+                                            color-picker-swatch-bootstrap="false"
+                                        ></color-picker>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Border width(px)</label>
+                                    <div class="col-sm-9">
+                                        <input type="number" ng-model="dashboard.settings.newTheme.data.border_width" class="form-control">
+                                    </div>
+                                </div>
+                                <button ng-show="newThemeCreation" class="btn btn-primary settings-action-button pull-right" ng-disabled=" Form.thme.$invalid || equalsThemes(dashboard.settings.newTheme, dashboard.settings.theme)" ng-click="saveNewTheme()">Save</button>
+                                <button ng-show="themeUpdation" class="btn btn-primary settings-action-button pull-right" ng-disabled=" Form.thme.$invalid || equalsThemes(dashboard.settings.newTheme, dashboard.settings.theme)" ng-click="updateTheme()">Change</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane " id="tabContent">
+                <div class="scrollable">
+                    <div class="p-l-10 p-r-50">
+                        <form id="form-work" class="form-horizontal ng-pristine ng-invalid ng-invalid-required" role="form" autocomplete="off" name="work" novalidate="">
+                            <div class="form-group">
+                                <label for="shareUrl" class="col-sm-3 control-label">url</label>
+                                <div class="col-sm-9">
+                                    <div class="word-break">
+                                        http://hearstcharts.com/view/dashboards/{{ dashboard._id }}
+                                    </div>
+                                    <button class="btn btn-complete btn-xs m-t-10">Copy</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="shareIframe" class="col-sm-3 control-label">iframe</label>
+                                <div class="col-sm-9">
+                                    <div class="word-break">
+                                        &lt;iframe src="http://hearstcharts.com/view/dashboards/{{ dashboard._id }}"&gt;&lt;/iframe&gt;
+                                    </div>
+                                    <button class="btn btn-complete btn-xs m-t-10">Copy</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

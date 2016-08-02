@@ -1,0 +1,83 @@
+    <!-- BEGIN SIDEBPANEL-->
+    <nav class="page-sidebar" data-pages="sidebar" pg-sidebar>
+      <!-- BEGIN SIDEBAR MENU HEADER-->
+      <div class="sidebar-header">
+        <img src="../backApp/assets/img/logo_white.png" alt="logo" class="brand" data-src="../backApp/assets/img/logo_white.png" ui-jq="unveil" data-src-retina="../backApp/assets/img/logo_white_2x.png" width="78" height="22">
+        <div class=" pull-right">
+        <!-- START User Info-->
+            <div class="dropdown pull-right">
+                <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="thumbnail-wrapper d32 circular inline m-t-5">
+                        <img src="{{ auth.profile.picture }}" alt="" data-src="{{ auth.profile.picture }}" ui-jq="unveil" data-src-retina="{{ auth.profile.picture }}" width="32" height="32">
+                    </span>
+                </button>
+                <ul class="dropdown-menu profile-dropdown" role="menu">
+                    <li><a href=""><i class="pg-settings_small"></i> Settings</a>
+                    </li>
+                    <li><a href=""><i class="pg-outdent"></i> Feedback</a>
+                    </li>
+                    <li><a href=""><i class="pg-signals"></i> Help</a>
+                    </li>
+                    <li class="bg-master-lighter" ng-click="signout()">
+                        <a href="" class="clearfix">
+                            <span class="pull-left">Logout</span>
+                            <span class="pull-right"><i class="pg-power"></i></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        <!-- END User Info-->
+    </div>
+      </div>
+      <!-- END SIDEBAR MENU HEADER-->
+      <!-- START SIDEBAR MENU -->
+      <div class="sidebar-menu">
+        <!-- BEGIN SIDEBAR MENU ITEMS-->
+        <ul class="menu-items">
+          <li class="m-t-30 open" ui-sref-active="active">
+            <a ui-sref="app.dashboard">
+              <span class="title">Home</span>
+            </a>
+            <span class="icon-thumbnail bg-success"><i class="pg-home"></i></span>
+          </li>
+          <li ui-sref-active="active">
+            <a ui-sref="app.email.inbox" class="detailed">
+              <span class="title">Dashboards</span>
+              <span class="details">12 Dashboards</span>
+            </a>
+            <span class="icon-thumbnail"><i class="fa fa-th"></i></span>
+          </li>
+          <li ui-sref-active="active">
+            <a ui-sref="app.email.inbox" class="detailed">
+              <span class="title">Data Sources</span>
+              <span class="details">2 Data Sources</span>
+            </a>
+            <span class="icon-thumbnail"><i class="fa fa-database"></i></span>
+          </li>
+          <li ui-sref-active="active">
+            <a ui-sref="app.email.inbox" class="detailed">
+              <span class="title">Cards</span>
+              <span class="details">13 Cards</span>
+            </a>
+            <span class="icon-thumbnail"><i class="pg-charts"></i></span>
+          </li>
+          <li ui-sref-active="active">
+            <a ui-sref="app.email.inbox" class="detailed">
+              <span class="title">Members</span>
+              <span class="details">23 Members</span>
+            </a>
+            <span class="icon-thumbnail"><i class="fa fa-users"></i></span>
+          </li>
+          <li ui-sref-active="active">
+            <a ui-sref="app.email.inbox">
+              <span class="title">Settings</span>
+            </a>
+            <span class="icon-thumbnail"><i class="pg-settings_small"></i></span>
+          </li>
+        </ul>
+        <div class="clearfix"></div>
+      </div>
+      <!-- END SIDEBAR MENU -->
+    </nav>
+    <!-- END SIDEBAR -->
+    <!-- END SIDEBPANEL-->

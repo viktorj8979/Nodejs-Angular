@@ -1,0 +1,168 @@
+<div ng-controller="CardsCreateCtrl" class="full-height">
+    <!-- START PAGE-CONTAINER -->
+    <div ng-if="card" class="page" class="full-height">
+		<div class="page-nav col-md-12">
+	        <h3 class="page-title pull-left" ng-style="{'color': dashboard.settings.newTheme.data.color || dashboard.settings.theme.data.color }" ng-bind="card.title"></h3>
+	        <div class="header-actions pull-right">
+	            <ul class="list-inline">
+	                <li tooltip="delete" tooltip-placement="bottom">
+	                    <div ng-click="deleteCard();" class="thumbnail-wrapper d32 circular b-white">
+	                        <div class="bg-danger text-center text-white">
+	                            <span>
+	                                <i class="fa fa-trash-o"></i>
+	                            </span>
+	                        </div>
+	                    </div>
+	                </li>
+	                <li tooltip="save" tooltip-placement="bottom">
+	                    <div ng-click="saveCard();" class="thumbnail-wrapper d32 circular b-white">
+	                        <div class="bg-success text-center text-white">
+	                            <span>
+	                                <i class="fa fa-check"></i>
+	                            </span>
+	                        </div>
+	                    </div>
+	                </li>
+	                <li tooltip="settings" tooltip-placement="bottom">
+	                    <div class="thumbnail-wrapper d32 circular b-white">
+	                        <div class="bg-master text-center text-white">
+	                            <span>
+	                                <i class="pg-settings"></i>
+	                            </span>
+	                        </div>
+	                    </div>
+	                </li>
+	            </ul>
+	        </div>
+	    </div>
+
+	    <div class="row full-height">
+
+	    	<!-- START PANEL -->
+	    	<div class="col-md-5 full-height">
+	            <div class="panel panel-transparent full-height">
+	                <!-- Nav tabs -->
+	                <ul class="nav nav-tabs nav-tabs-left nav-tabs-linetriangle-manual">
+	                    <li ng-class="{'enabled': activeStep === 'charts' }">
+	                        <a href="" ng-click="enableStep('charts')" pg-tab>
+	                        	<span>Chart Type</span></a>
+	                    </li>
+	                    <li ng-class="{'enabled': activeStep === 'data' }">
+	                        <a href="" ng-click="enableStep('data')" pg-tab>
+	                        	<span>Choose Data</span></a>
+	                    </li>
+	                    <li ng-class="{'enabled': activeStep === 'data-options' }">
+	                        <a href="" ng-click="enableStep('data-options')" pg-tab>
+	                        	<span>Data Options</span></a>
+	                    </li>
+	                    <li ng-class="{'enabled': activeStep === 'filters' }">
+	                        <a href="" ng-click="enableStep('filters')" pg-tab>
+	                        	<span>Filters</span></a>
+	                    </li>
+	                    <li ng-class="{'enabled': activeStep === 'style' }">
+	                        <a href="" ng-click="enableStep('style')" pg-tab>
+	                        	<span>Style</span></a>
+	                    </li>
+	                </ul>
+	                <!-- Tab panes -->
+	                <div class="tab-content full-height">
+	                    <div ng-class="{'active': activeStep === 'charts', 'in': activeStep === 'charts' }" class="tab-pane fade" id="charts">
+	                        <div class="row column-seperation">
+	                            <div class="col-md-12 card-options">
+						    		<div class="panel panel-transparent">
+										<ul class="nav nav-tabs nav-tabs-right" id="tab-3">
+											<li class="active">
+												<a data-toggle="tab" pg-tab="" href="#tab3hellowWorld" aria-expanded="true">
+													<i class="ti-star"></i>
+												</a>
+											</li>
+											<li class="">
+												<a data-toggle="tab" pg-tab="" href="#tab3FollowUs" aria-expanded="false">
+													<i class="ti-pie-chart"></i>
+												</a>
+											</li>
+											<li class="">
+												<a data-toggle="tab" pg-tab="" href="#tab3Inspire" aria-expanded="false">
+													<i class="ti-bar-chart"></i>
+												</a>
+											</li>
+										</ul>
+										<div class="tab-content">
+											<div class="tab-pane active" id="tab3hellowWorld">
+												<div class="row column-seperation">
+													<div class="card-option" ng-click="addChartOption(option.type)" ng-repeat="option in cardOptions">
+														<button class="btn btn-lg btn-default m-b-5">
+											    			<div ng-if="option.innerText">{{ option.innerText }}</div>
+											    			<img ng-if="option.image" ng-src="{{ option.image }}">
+											    		</button>
+											    		<span class="desc">{{ option.title }}</span>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane" id="tab3FollowUs">
+											</div>
+											<div class="tab-pane" id="tab3Inspire">
+											</div>
+										</div>
+									</div>
+								</div>
+	                        </div>
+	                    </div>
+	                    <div ng-class="{'active': activeStep === 'data', 'in': activeStep === 'data' }" class="tab-pane fade" id="data">
+	                        <div class="row">
+	                            <div class="col-md-12">
+	                                <!--START DATA SETTINGS -->
+									    <div ng-include src=" '../backApp/cards/partial/card.option.settings/card.option.settings.html' " include-replace>
+									    </div>
+									<!-- END DATA SETTINGS-->
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div ng-class="{'active': activeStep === 'data-options', 'in': activeStep === 'data-options' }" class="tab-pane fade" id="data">
+	                        <div class="row">
+	                            <div class="col-md-12">
+	                                <!--START DATA SETTINGS -->
+									    <div ng-include src=" '../backApp/cards/partial/cards.create.data.options/cards.create.data.options.html' " include-replace>
+									    </div>
+									<!-- END DATA SETTINGS-->
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div ng-class="{'active': activeStep === 'filters', 'in': activeStep === 'filters' }" class="tab-pane fade" id="data">
+	                        <div class="row">
+	                            <div class="col-md-12">
+	                                <!--START DATA SETTINGS -->
+									    <div ng-include src=" '../backApp/cards/partial/cards.create.filters/cards.create.filters.html' " include-replace>
+									    </div>
+									<!-- END DATA SETTINGS-->
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div ng-class="{'active': activeStep === 'style', 'in': activeStep === 'style' }" class="tab-pane fade" id="style">
+	                        <div class="row">
+	                            <div class="col-md-12">
+	                                <h3>Follow us &amp; get updated!</h3>
+	                                <p>Instantly connect to what's most important to you. Follow your friends, experts, favorite celebrities, and breaking news.</p>
+	                                <br>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+		    <!-- END PANEL -->
+
+			<div class="col-md-7 card-region">
+				<div class="m-t-20" gridster="gridsterOpts">
+	                <ul>
+	                    <li gridster-item="card" ng-style="card.style">
+	                        <hc-card card-config="card"></hc-card>
+	                    </li>
+	                </ul>
+	            </div>
+			</div>
+
+		</div>
+	</div>
+	<!-- END PAGE-CONTAINER -->
+</div>

@@ -1,0 +1,46 @@
+<div ng-controller="CardsDataCtrl" class="row">
+	<div class="col-md-3">
+		<div ng-show="loadingDatasources" class="progress-circle-indeterminate m-t-45"></div>
+		<div ng-hide="loadingDatasources">
+			<button ng-click="backToCard();" class="btn btn-lg btn-wide btn-complete btn-cons m-b-10" ng-disabled="card.datasources.length === 0">Add {{ card.datasources.length }} datasources</button>
+			<input ng-model="searchText" type="text" class="form-control m-b-10" placeholder="Search...">
+			<ul class="list-group">
+				<li class="list-group-item" ng-repeat="data in datasources | filter:searchText">
+					<div class="checkbox check-success  ">
+						<input type="checkbox" ng-click="addOrRemoveDatasource(data);" ng-checked="hasDatasource(data);" value="1" id="{{ data._id }}">
+						<label for="{{ data._id }}"> <a ng-click="viewData(data)" href="">{{ data.title }}</a></label>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="col-md-9">
+		<!-- START PANEL -->
+		<div class="panel panel-default">
+			<div ng-show="loadingData" class="progress-circle-indeterminate m-t-45"></div>
+		    <div ng-hide="loadingData" class="panel-heading">
+		        <h4 class=" p-t-0 m-t-0 inline">{{ datasource.title }}</h4>
+		        <div class="export-options-container pull-right"></div>
+		        <div class="clearfix"></div>
+		    </div>
+		    <div ng-hide="loadingData" class="panel-body">
+		        <table ng-if="table.options" class="table table-striped" id="tableWithExportOptions" ui-jq="dataTable" ui-options="table.options">
+		            <thead>
+		                <tr>
+		                    <th ng-repeat="column in table.columns">{{ column.name }}</th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		                <tr ng-repeat="row in table.rows" class="odd gradeX">
+		                    <td ng-repeat="column in table.columns">
+		                    	{{ row[column.key] }}
+		                    </td>
+		                </tr>
+		            </tbody>
+		        </table>
+		    </div>
+		</div>
+		<!-- END PANEL -->
+	</div>
+</div>

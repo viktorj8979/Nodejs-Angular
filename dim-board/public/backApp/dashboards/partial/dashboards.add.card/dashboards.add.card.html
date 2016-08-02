@@ -1,0 +1,82 @@
+<!--START QUICKVIEW -->
+<div ng-controller="DashboardsAddCardCtrl" id="addCardView" class="quickview-wrapper"  ng-class="{'open' : openedCardMenu }" pg-quickview>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs">
+
+    </ul>
+    <a ng-click="selectedCard = {};" class="btn-link quickview-toggle" data-toggle-element="#addCardView" data-toggle="quickview"><i class="pg-close"></i></a>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <!-- BEGIN cards !-->
+        <div class="tab-pane fade in active no-padding" id="quickview-chat">
+            <div class="view-port clearfix" id="chat">
+                <div class="view bg-white">
+                    <!-- BEGIN View Header !-->
+                    <div class="navbar navbar-default">
+                        <div class="navbar-inner">
+                            <!-- BEGIN Header Controler !-->
+                            <a href="javascript:;" class="inline action p-l-10 link text-master" pg-navigate data-view-port="#chat" pg-navigate data-view-animation="push-parrallax">
+                                <i class="pg-plus"></i>
+                            </a>
+                            <!-- END Header Controler !-->
+                            <div class="view-heading">
+                                Card List
+                                <div class="fs-11 hint-text">{{ cards.length }} cards</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END View Header !-->
+                    <div ui-jq="ioslist" class="list-view boreded no-top-border">
+                        <div class="list-view-group-container">
+                            <div class="list-view-group-header text-uppercase">
+                                <i class="fa fa-search"></i>
+                                <input ng-model="searchCards" placeholder="search" class="search-wide" type="text" />
+                            </div>
+                            <ul>
+                                <!-- BEGIN Chat User List Item  !-->
+                                <li class="chat-user-list clearfix" ng-repeat="card in cards | filter:searchCards">
+                                    <a ng-click="addCard(card)" href="javascript:;">
+                                        <span class="col-xs-height col-middle">
+                                            <span class="thumbnail-wrapper d32">
+                                                <img width="34" height="34" alt="" data-src-retina="{{ card.datasources[0].data_integration.image_path }}" data-src="{{ card.datasources[0].data_integration.image_path }}" src="{{ card.datasources[0].data_integration.image_path }}" class="col-top">
+                                            </span>
+                                        </span>
+                                        <p class="p-l-10 col-xs-height col-middle col-xs-12">
+                                            <span class="text-master" ng-bind="card.title"></span>
+                                            <span class="block text-master hint-text fs-12">{{ card.created_by.name }}</span>
+                                        </p>
+                                    </a>
+                                </li>
+                                <!-- END Chat User List Item  !-->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- BEGIN Conversation View  !-->
+                <div class="view chat-view bg-white clearfix">
+                    <!-- BEGIN Header  !-->
+                    <div class="navbar navbar-default">
+                        <div class="navbar-inner">
+                            <a href="javascript:;" class="link text-master inline action p-l-10" pg-navigate data-view-port="#chat" pg-navigate data-view-animation="push-parrallax">
+                                <i class="pg-arrow_left"></i>
+                            </a>
+                            <div class="view-heading">
+                                Data Sources
+                                <div class="fs-11 hint-text">3 Data Sources</div>
+                            </div>
+                            <a href="" class="link text-master inline action p-r-10 pull-right ">
+                                <i class="pg-more"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- END Header  !-->
+                    <!-- BEGIN Conversation  !-->
+                    <div class="chat-inner" id="my-conversation">
+                    </div>
+                </div>
+                <!-- END Conversation View  !-->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END QUICKVIEW-->

@@ -1,0 +1,63 @@
+{
+
+    "express": {
+        "view cache": false,
+        "view engine": "dust",
+        "views": "path:./public/templates"
+    },
+
+    "view engines": {
+        "dust": {
+            "module": "engine-munger",
+            "renderer": {
+                "method": "dust",
+                "arguments": [
+                    { "cache": false },
+                    {
+                        "views": "config:express.views",
+                        "view engine": "config:express.view engine",
+                        "specialization": "config:specialization",
+                        "i18n": "config:i18n"
+                    }
+                ]
+            }
+        }
+    },
+
+    "databaseConfig": {
+        "host": "dim-admin:dimBoards$%^7@candidate.7.mongolayer.com:10504,candidate.10.mongolayer.com:10518",
+        "database": "dim-develop?replicaSet=set-55c977b2e2d3d1713100035c"
+    },
+
+    "middleware": {
+
+        "devtools": {
+            "enabled": true,
+            "priority": 35,
+            "module": {
+                "name": "kraken-devtools",
+                "arguments": [
+                    "path:./public",
+                    "path:./.build",
+                    {
+                        "dust": {
+                            "module": "kraken-devtools/plugins/dustjs",
+                            "files": "/templates/**/*.js",
+                            "base": "templates",
+                            "i18n": "config:i18n"
+                        },
+                        "less": {
+                            "module": "kraken-devtools/plugins/less",
+                            "files": "/css/**/*.css"
+                        },
+                        "copier": {
+                            "module": "kraken-devtools/plugins/copier",
+                            "files": "**/*"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+
+}

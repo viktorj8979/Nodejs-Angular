@@ -1,0 +1,77 @@
+{
+  "generator-cg-angular": {
+    "uirouter": true,
+    "partialDirectory": "partial/",
+    "modalDirectory": "modal/",
+    "directiveDirectory": "directive/",
+    "filterDirectory": "filter/",
+    "serviceDirectory": "service/",
+    "inject": {
+      "js": {
+        "file": "templates/backIndex.dust",
+        "marker": "<!-- Add New Component JS Above -->",
+        "template": "<script src=\"<%= filename %>\"></script>"
+      },
+      "less": {
+        "relativeToModule": true,
+        "file": "<%= module %>.less",
+        "marker": "/* Add Component LESS Above */",
+        "template": "@import \"<%= filename %>\";"
+      }
+    },
+    "modules": [
+      {
+        "name": "core",
+        "file": "backApp/core/core.js"
+      },
+      {
+        "name": "common",
+        "file": "backApp/common/common.js"
+      },
+      {
+        "name": "dashboards",
+        "file": "backApp/dashboards/dashboards.js"
+      },
+      {
+        "name": "auth",
+        "file": "backApp/auth/auth.js"
+      },
+      {
+        "name": "groups",
+        "file": "backApp/groups/groups.js"
+      },
+      {
+        "name": "datasources",
+        "file": "backApp/datasources/datasources.js"
+      },
+      {
+        "name": "cards",
+        "file": "backApp/cards/cards.js"
+      },
+      {
+        "name": "members",
+        "file": "backApp/members/members.js"
+      },
+      {
+        "name": "settings",
+        "file": "backApp/settings/settings.js"
+      },
+      {
+        "name": "themes",
+        "file": "backApp/themes/themes.js"
+      },
+      {
+        "name": "dataintegration",
+        "file": "backApp/dataintegration/dataintegration.js"
+      },
+      {
+        "name": "accounts",
+        "file": "backApp/accounts/accounts.js"
+      },
+      {
+        "name": "permissions",
+        "file": "backApp/permissions/permissions.js"
+      }
+    ]
+  }
+}

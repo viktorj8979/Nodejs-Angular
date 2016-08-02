@@ -1,0 +1,118 @@
+<!--START QUICKVIEW -->
+<div ng-controller="DatasourceAddCtrl" id="addCardView" ng-init="isReplaced = false" class="quickview-wrapper" pg-quickview>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs">
+
+    </ul>
+    <a ng-click="selectedCard = {};" class="btn-link quickview-toggle" data-toggle-element="#addCardView" data-toggle="quickview" pg-manipulate data-hided-view="#chat"><i class="pg-close"></i></a>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <!-- BEGIN cards !-->
+        <div class="tab-pane fade in active no-padding" id="quickview-chat">
+            <div class="view-port clearfix" id="chat">
+                <div class="view bg-white">
+                    <!-- BEGIN View Header !-->
+                    <div class="navbar navbar-default">
+                        <div class="navbar-inner">
+                            <div class="view-heading">
+                                Data Integrations
+                                <div class="fs-11 hint-text">{{ dataIntegrations.length }} Integrations</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END View Header !-->
+                    <div ui-jq="ioslist" class="list-view boreded no-top-border">
+                        <div class="list-view-group-container">
+                            <div class="list-view-group-header text-uppercase">
+                                <i class="fa fa-search"></i>
+                                <input ng-model="search" placeholder="search" class="search-wide" type="text" />
+                            </div>
+                            <ul>
+                                <!-- BEGIN Chat User List Item  !-->
+                                <div ng-click="selectDataIntegration(integration)" class="col-md-6 m-t-15" ng-repeat="integration in dataIntegrations | filter:search"  pg-navigate data-view-port="#chat" pg-navigate data-view-animation="push-parrallax">
+                                    <div class="panel panel-default" style="padding: 0px;">
+                                        <div class="panel-body" style="padding: 0px;">
+                                            <img width="110" alt="" data-ng-src="{{ integration.image_path }}" data-src="{{ integration.image_path }}" class="col-top">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END Chat User List Item  !-->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- BEGIN Conversation View  !-->
+                <div class="view chat-view bg-white clearfix">
+                    <!-- BEGIN Header  !-->
+                    <div class="navbar navbar-default">
+                        <div class="navbar-inner">
+                            <a href="javascript:;" class="link text-master inline action p-l-10" pg-navigate data-view-port="#chat" pg-navigate data-view-animation="push-parrallax">
+                                <i class="pg-arrow_left"></i>
+                            </a>
+                            <div class="view-heading">
+                                {{ dataIntegration.name }}
+                            </div>
+                            <a href="" class="link text-master inline action p-r-10 pull-right ">
+                                <i class="pg-more"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- END Header  !-->
+                    <!-- BEGIN Conversation  !-->
+                    <div class="chat-inner" id="my-conversation">
+                        <form id="form-datasource" class="form-horizontal ng-pristine ng-invalid ng-invalid-required" role="form" autocomplete="off" name="datasource" novalidate="">
+                            <div class="alert alert-success" role="alert" ng-show="uploadSuccess">
+                                <button class="close" data-dismiss="alert"></button>
+                                <strong>Success: </strong>
+                                <div>Data was succesful uploaded</div>
+                            </div>
+                            <div class="alert alert-danger" role="alert" ng-show="uploadError">
+                                <button class="close" data-dismiss="alert"></button>
+                                <strong>Error: </strong>
+                                <div>There is some error while trying to uplod data</div>
+                            </div>
+                            <div class="alert alert-warning" role="alert" ng-show="uploadWarning">
+                                <button class="close" data-dismiss="alert"></button>
+                                <strong>Warning: </strong>
+                                <div ng-bind="message"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-12 control-label">Accounts</label>
+                                <div class="col-sm-12">
+                                    <div class="btn-group btn-group-wide" dropdown dropdown-append-to-body>
+                                      <button id="accounts" type="button" class="btn btn-primary" dropdown-toggle>
+                                        {{ account.name || 'Select Account' }} <span ng-show="!isReplaced" class="caret"></span>
+                                      </button>
+                                      <ul class="dropdown-menu" role="menu" aria-labelledby="accounts" ng-show="!isReplaced">
+                                        <li ng-click="selectAccount(account)" ng-repeat="account in selectedAccounts" role="menuitem"><a href="#">{{ account.name }}</a></li>
+                                      </ul>
+                                    </div>
+                                </div>
+                            </div>               
+                        </form>
+                        <div class="col-sm-12">
+                            <span class="input-group-btn">
+                                <span class="btn btn-file">
+                                    <span ng-show="!isReplaced">Browse&hellip;</span> 
+                                    <span ng-show="isReplaced" ng-bind-template="Replacing of - {{replacingObj.fileDataPath}}"></span>
+                                    <input type="file" name="file" type="file" multiple upload-files>
+                                </span>
+                            </span>
+                            <span>
+                                <button ng-disabled="(loading || !files)" ng-click="upload(isReplaced)"  class="btn confirm" tabindex="1" ng-bind="getTransferButtonName(isReplaced);"></button>
+                            </span>
+                        </div>
+                    </div>
+                        <div class="row uploaded-bg" ng-show="loading">
+                            <div class="col-sm-12 text-center uploading-spinner">
+                                <i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Conversation View  !-->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END QUICKVIEW-->

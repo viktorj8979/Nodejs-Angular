@@ -1,0 +1,130 @@
+<div ng-controller="CardsListCtrl">
+	<!-- START PAGE -->
+	<div class="page" class="full-height">
+		<!-- START PAGE CONTENT WRAPPER -->
+		<div class="full-height">
+			<!-- START PAGE CONTENT -->
+			<div class="content" class="full-height">
+				<div class="container-fluid container-fixed-lg ng-scope">
+					<h2 class="pull-left m-l-15">{{cards.length}} Cards</h2>
+					<div class="toolbar-icon-bg pull-left m-t-15 m-l-15" id="toolbar-search">
+						<div class="input-group search-icon">
+							<i class="ti ti-search"></i>
+							<input ng-model="searchText" type="text" class="form-control" placeholder="Search...">
+						</div>
+				    </div>
+				    <button ui-sref="cards.create" class="btn btn-primary pull-right m-t-15 m-r-15" ng-if="user.permissions.Cards.View && user.permissions.Cards.Create"><i class="fa fa-th"></i> Create a Card</button>
+				    <div class="clearfix"></div>
+					<div class="panel-heading">						
+						<div class="pull-left">
+							<ul class="list-inline">
+								<li>
+									<span>Sort By:</span>
+								</li>
+								<li ng-class="{ 'active': predicate === 'title'}">
+									<span ng-click="order('title')">Title</span>
+									<span class="sortorder" ng-show="predicate === 'title'" ng-class="{reverse:reverse}"></span>
+								</li>
+								<li ng-class="{ 'active': predicate === 'file.name'}">
+									<span ng-click="order('file.name')">CSV File</span>
+									<span class="sortorder" ng-show="predicate === 'file.name'" ng-class="{reverse:reverse}"></span>
+								</li>
+								<li ng-class="{ 'active': predicate === 'modified_by.name'}">
+									<span ng-click="order('modified_by.name')">Last Author</span>
+									<span class="sortorder" ng-show="predicate === 'modified_by.name'" ng-class="{reverse:reverse}"></span>
+								</li>
+								<li ng-class="{ 'active': predicate === 'modified_on'}">
+									<span ng-click="order('modified_on')">Last Updated</span>
+									<span class="sortorder" ng-show="predicate === 'modified_on'" ng-class="{reverse:reverse}"></span>
+								</li>
+								<li ng-class="{ 'active': predicate === 'type'}">
+									<span ng-click="order('type')">Card Type</span>
+									<span class="sortorder" ng-show="predicate === 'type'" ng-class="{reverse:reverse}"></span>
+								</li>
+							</ul>
+						</div>
+						<div class="global-panel-action-right">
+							<ul class="list-inline" ng-if="user.permissions.Cards.View && user.permissions.Cards.Delete">
+								<li>
+									<span tooltip="Delete">
+										<i ng-click="deleteAllDashboards()" class="ti-trash"></i>
+									</span>
+								</li>
+								<li>
+									<label tooltip="Select">
+										<input type="checkbox" ng-click="selectAllDashboards(selectAll);" ng-model="selectAll">
+									</label>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="panel-body">
+						<table class="table table-details table-hover table-responsive">
+		                    <thead></thead>
+		                    <tbody>
+		                        <tr ng-repeat="card in cards | filter:searchText | orderBy:predicate:reverse">
+								<td width="120">
+									<img width="120" class="thumbnail" data-ng-src="{{ card.thumb_url }}">
+								</td>
+								<td>
+									<span tooltip="View Card">
+										<i class="ti-pie-card"></i> <b>{{ card.title }}</b>
+									</span>
+									<br>
+									<span tooltip="View Details">
+										<a href="" ng-click="viewDetails(card)" data-toggle="quickview" data-toggle-element="#cardView"><i class="ti-eye"></i> View Details</a>
+									</span>
+								</td>
+								<td>
+									<span tooltip="Last Author">
+										<i class="ti-user"></i> {{ card.modified_by.first_name }} {{ card.modified_by.last_name }}
+									</span><br>
+									<span tooltip="Last Updated">
+										<i class="ti-time"></i> {{ card.modified_on | date:'medium'}}
+									</span>
+								</td>
+								<td>
+									<span tooltip="Datasources">
+										<i class="pg-charts"></i> {{ card.datasources.length }} Datasources
+									</span>
+								</td>
+								<td>
+									<ul class="list-inline pull-right">
+										<li tooltip="Share" data-toggle="quickview" data-toggle-element="#cardShare">
+											<i ng-click="shareCard(card)" class="ti-share"></i>
+										</li>
+										<li ng-click="editCard(card._id)" tooltip="Edit" ng-if="user.permissions.Cards.View && user.permissions.Cards.Edit">
+											<i class="ti-pencil-alt"></i>
+										</li>
+										<li tooltip="Delete" ng-if="user.permissions.Cards.View && user.permissions.Cards.Delete">
+											<i ng-click="deleteCard(card)" class="ti-trash"></i>
+										</li>
+										<li ng-if="user.permissions.Cards.View && user.permissions.Cards.Delete">
+											<label tooltip="Select">
+												<input type="checkbox" ng-click="selectCard(card)" ng-checked="selected(card)" checked>
+											</label>
+										</li>
+									</ul>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END PAGE -->
+	<!--START DASHBOARD SETTINGS -->
+		<div ng-include src=" '../backApp/dashboards/partial/dashboards.settings/dashboards.settings.html' " include-replace>
+		</div>
+	<!-- END DASHBOARD SETTINGS-->
+	<!--START CARD SHARE -->
+		<div ng-include src=" '../backApp/cards/partial/card.share/card.share.html' " include-replace>
+		</div>
+	<!-- END CARD SHARE -->
+	<!-- START DASHBOARD VIEW -->
+		<div ng-include src=" '../backApp/cards/partial/cards.view/cards.view.html' " include-replace>
+		</div>
+	<!-- END DASHBOARD VIEW -->
+</div>

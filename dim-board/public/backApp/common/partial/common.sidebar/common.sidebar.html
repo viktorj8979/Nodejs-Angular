@@ -1,0 +1,102 @@
+<!-- BEGIN SIDEBPANEL-->
+<nav ng-controller="CommonSidebarCtrl" ng-show="groups.length > 0" class="page-sidebar" data-pages="sidebar" ng-mouseenter="mouseEnterSidebar($event)" ng-mouseleave="closeSideMenu($event)" pg-sidebar>
+  <!-- BEGIN SIDEBAR MENU HEADER-->
+  <div class="sidebar-header">
+    <img src="../backApp/assets/img/logo_white.png" alt="logo" class="brand" data-src="../backApp/assets/img/logo_white.png" ui-jq="unveil" data-src-retina="../backApp/assets/img/logo_white_2x.png">
+    <div class=" pull-right">
+    <!-- START User Info-->
+        <div class="dropdown pull-right" id="profile-dropdown">
+            <button class="profile-dropdown-toggle"  type="button" data-toggle="dropdown" ng-click="closeGroupDropdown()" aria-haspopup="true" aria-expanded="false">
+                <span class="thumbnail-wrapper d32 circular inline m-t-5">
+                    <img alt="" data-src="{{ user.picture }}" ui-jq="unveil" data-src-retina="{{ user.picture }}" width="32" height="32">
+                </span>
+            </button>
+            <ul class="dropdown-menu profile-dropdown" role="menu">
+                <li><a href=""><i class="pg-settings_small"></i> Settings</a>
+                </li>
+                <li><a href=""><i class="pg-outdent"></i> Feedback</a>
+                </li>
+                <li><a href=""><i class="pg-signals"></i> Help</a>
+                </li>
+                <li class="bg-master-lighter" ng-click="signout()">
+                    <a href="" class="clearfix">
+                        <span class="pull-left">Logout</span>
+                        <span class="pull-right"><i class="pg-power"></i></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    <!-- END User Info-->
+</div>
+  </div>
+  <!-- END SIDEBAR MENU HEADER-->
+  <!-- START SIDEBAR MENU -->
+  <div class="sidebar-menu" ng-click="closeMobileSideMenu($event)">
+    <!-- BEGIN SIDEBAR MENU ITEMS-->
+    <ul class="menu-items">
+      <li class="m-t-30 group-menu open" ui-sref-active="active">
+        <div class="thumbnail-wrapper d34 circular b-white icon-thumbnail">
+            <div class="bg-primary text-center text-white">
+                <span>
+                    t
+                </span>
+            </div>
+        </div>
+
+        <div class="btn-group" dropdown is-open="status.isopen">
+          <button id="single-button" type="button" class="btn single-button" dropdown-toggle ng-disabled="disabled">
+            {{ selectedGroup.name }} <span class="caret"></span>
+            <span class="details">Current Group</span>
+          </button>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
+            <li role="menuitem" ng-repeat="group in groups">
+              <a ng-click="selectGroup(group);" href="">{{ group.name }}</a>
+            </li>
+            <li class="divider"></li>
+            <li role="menuitem" style="padding: 8px;">
+              <button class="btn btn-primary btn-block" ng-click="createGroup()">Create Group</button>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li ui-sref-active="active" ng-if="user.permissions.Dashboards.View">
+        <a ui-sref="dashboard.list" class="detailed">
+          <span class="title">Dashboards</span>
+          <span class="details">{{ dashboards.length }} Dashboards</span>
+        </a>
+        <span class="icon-thumbnail"><i class="fa fa-th"></i></span>
+      </li>
+      <li ui-sref-active="active" ng-if="user.permissions.Datasources.View">
+        <a ui-sref="datasources.list" class="detailed">
+          <span class="title">Datasources</span>
+          <span class="details">{{ datasources.length }} Datasources</span>
+        </a>
+        <span class="icon-thumbnail"><i class="fa fa-database"></i></span>
+      </li>
+      <li ui-sref-active="active" ng-if="user.permissions.Cards.View">
+        <a ui-sref="cards.list" class="detailed">
+          <span class="title">Cards</span>
+          <span class="details">{{ cards.length }} Cards</span>
+        </a>
+        <span class="icon-thumbnail"><i class="pg-charts"></i></span>
+      </li>
+      <li ui-sref-active="active" ng-if="user.permissions.Members.View">
+        <a ui-sref="members.list" class="detailed">
+          <span class="title">Members</span>
+          <span class="details">{{ members.length }}  Members</span>
+        </a>
+        <span class="icon-thumbnail"><i class="fa fa-users"></i></span>
+      </li>
+      <li ui-sref-active="active" ng-if="user.permissions.Settings.View">
+        <a ui-sref="settings.config">
+          <span class="title">Settings</span>
+        </a>
+        <span class="icon-thumbnail"><i class="pg-settings_small"></i></span>
+      </li>
+    </ul>
+    <div class="clearfix"></div>
+  </div>
+  <!-- END SIDEBAR MENU -->
+</nav>
+<!-- END SIDEBAR -->
+<!-- END SIDEBPANEL-->

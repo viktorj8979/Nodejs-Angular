@@ -1,0 +1,186 @@
+<div ng-controller="SettingsConfigCtrl">
+	<!-- START PAGE -->
+	<div class="page" class="full-height">
+		<!-- START PAGE CONTENT WRAPPER -->
+		<div class="full-height">
+			<!-- START PAGE CONTENT -->
+			<div class="content" class="full-height">
+				<div class="container-fluid container-fixed-lg ng-scope">
+					<h2 class="pull-left m-l-15">Settings</h2>
+					<div ng-click="deleteGroup()" class="pull-right m-t-15">
+						<button class="btn btn-primary btn-cons pull-right" ng-if="user.permissions.Settings.View && user.permissions.Settings.Delete">
+							<span class="ti-trash"></span> Delete Group
+						</button>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="panel settings-panel">
+								<ul class="nav nav-tabs nav-tabs-simple" role="tablist">
+									<li class="active"><a href="#tab2RolesPermissions" data-toggle="tab" pg-tab="" role="tab">Roles & Permissions</a></li>
+									<li><a href="#tab2DataIntegrations" data-toggle="tab" pg-tab="" role="tab">Data Integrations</a></li>
+									<li><a href="#tab2Themes" data-toggle="tab" pg-tab="" role="tab">Themes</a></li>
+								</ul>
+								<div class="tab-content full-width">
+									<div class="tab-pane active" id="tab2RolesPermissions">
+										<div class="row">
+											<div class="col-md-10 col-md-push-1">
+												<form action="" class="form-horizontal row-border">
+													<div class="form-group">
+														<label class="col-md-3 control-label">Role:</label>
+														<div class="col-md-9">
+															<select class="form-control" ng-model="selectedRole" ng-options="role.name for role in roles">
+															
+															</select>
+														</div>
+													</div>
+													<div ng-show="selectedRole._id || selectedRole.roleCreated" class="form-group">
+														<label class="col-md-3 control-label">Permissions:</label>
+														<div class="col-sm-9">
+															<input type="text" class="form-control ng-pristine ng-valid ng-touched" placeholder="Set role name" ng-show="selectedRole.roleCreated" ng-model="createdRoleName">
+															<table class="table table-bordered ng-scope">
+																<thead>
+																<tr>
+																	<th class="text-center">access</th>
+																	<th ng-repeat="permission in selectedRole.access[0].permissions" class="ng-binding text-center">
+																		{{ permission.name }}
+																	</th>
+																</tr>
+																</thead>
+																<tbody>
+																<tr ng-repeat="access in selectedRole.access" class="ng-scope">
+																	<td class="ng-binding text-center">{{ access.name }}</td>
+																	<td ng-repeat="permission in access.permissions" class="ng-binding text-center">
+																		<input type="checkbox" ng-checked="initPermission(selectedRole, permission);" ng-disabled="isChosenAdmin(selectedRole)" ng-model="permission.enabled" ng-click="permissionManipulation(permission, access.permissions)">
+																	</td>
+																</tr>
+																</tbody>
+															</table>
+															<div class="col-sm-9" ng-show="selectedRole.name !== 'admin'">
+																<input type="button" class="btn btn-primary btn-cons" ng-click="saveRole(selectedRole)"ng-value="selectedRole.roleCreated ? 'Create role' : 'Save Changes'" ng-disabled="!selectedRole || ( !createdRoleName && selectedRole.roleCreated ) " ng-if="user.permissions.Settings.View && user.permissions.Settings.Edit">
+																<input type="button" class="btn btn-danger" value="Delete" ng-click="deleteRole(selectedRole)" ng-disabled="(selectedRole.name === 'admin') || selectedRole.roleCreated || !selectedRole" ng-if="user.permissions.Settings.View && user.permissions.Settings.Delete">
+															</div>
+														</div>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane" id="tab2DataIntegrations">
+										<div class="row">
+											<div class="col-md-10 col-md-push-1">
+												<form action="" class="form-horizontal row-border">
+													<div class="form-group">
+														<div class="col-md-3">
+															<label class="control-label">Integrations:</label>
+														</div>
+														<div class="col-md-9">
+															<span class="help">Select an integration.</span>
+															<select class="form-control" ng-model="selectedIntegration" ng-options="integration.name for integration in dataIntegrations">
+															</select>
+														</div>
+													</div>
+													<div ng-show="selectedIntegration" class="form-group">
+														<label class="col-md-3 control-label">Accounts:</label>
+														<div class="col-sm-9">
+															<span class="help">Select the account you want to update.</span>
+															<div class="row">
+																<div class="col-md-5">
+																	<select class="form-control" ng-model="selectedAccount" ng-options="account.name for account in selectedAccounts">
+																		<option value="">select an account</option>
+																	</select>
+																</div>
+																<div class="col-md-2 text-center">
+																	<p> or </p>
+																</div>
+																<div class="col-md-5">
+																	<button class="btn btn-primary btn-cons m-t-0" ng-click="createAccount()" ng-if="user.permissions.Settings.View && user.permissions.Settings.Create">Create New Account</button>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div ng-show="selectedAccount" class="form-group">
+														<label class="col-md-3 control-label">Information:</label>
+														<div class="col-sm-9">
+															<table class="table table-bordered ng-scope">
+																<thead>
+																<tr>
+																	<th class="text-center">Fields</th>
+																	<th class="text-center">Information</th>
+																</tr>
+																</thead>
+																<tbody>
+																<tr>
+																	<td class="text-center">Name</td>
+																	<td class="ng-binding text-center">
+																		<input type="text" class="form-control" ng-model="selectedAccount.name">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="text-center">Access Key Id</td>
+																	<td class="ng-binding text-center">
+																		<input type="text" class="form-control" ng-model="selectedAccount.credentials.accessKeyId">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="text-center">Secret Access Key</td>
+																	<td class="ng-binding text-center">
+																		<input type="text" class="form-control" ng-model="selectedAccount.credentials.secretAccessKey">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="text-center">Region</td>
+																	<td class="ng-binding text-center">
+																		<input type="text" class="form-control" ng-model="selectedAccount.credentials.region">
+																	</td>
+																</tr>
+																<tr>
+																	<td class="text-center">Bucket</td>
+																	<td class="ng-binding text-center">
+																		<input type="text" class="form-control" ng-model="selectedAccount.credentials.bucket">
+																	</td>
+																</tr>
+																</tbody>
+															</table>
+															<button class="btn btn-primary btn-cons" ng-click="saveAccount()" ng-if="user.permissions.Settings.View && user.permissions.Settings.Edit">Save Changes</button>
+														</div>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane" id="tab2Themes">
+										<div class="row">
+											<div class="col-md-10 col-md-push-1">
+												<h5>Default Themes</h5>
+												<p>Choose a default theme to use for your dashboards and cards.</p>
+												<form action="" class="form-horizontal row-border" ng-model="themeForm">
+													<div class="form-group">
+														<label class="col-sm-2 control-label">Dashboard:</label>
+														<div class="col-sm-10">
+															<select ng-model="selectedGroup.settings.themes.dashboard" class="form-control" ng-options="theme._id as theme.name group by groupThemes(theme.core_theme) for theme in themes"></select>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-sm-2 control-label">Card:</label>
+														<div class="col-sm-10">
+														<select ng-model="selectedGroup.settings.themes.card" class="form-control" ng-options="theme._id as theme.name group by groupThemes(theme.core_theme) for theme in themes"></select>
+														</div>
+													</div>
+													<div class="form-group">
+														<div class="col-sm-10 col-sm-push-2">
+															<button class="btn btn-primary btn-cons" ng-click="saveTheme()" ng-if="user.permissions.Settings.View && user.permissions.Settings.Edit">Save Changes</button>
+														</div>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

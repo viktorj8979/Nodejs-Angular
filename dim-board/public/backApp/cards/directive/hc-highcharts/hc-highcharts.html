@@ -1,0 +1,31 @@
+<div style="height: inherit; width: inherit;">
+
+	<div ng-if="config.settings.selected.filters.length > 0" class="chart-filter col-sm-12">
+	  <div class="btn-group" dropdown is-open="filter.open" ng-repeat="filter in config.settings.selected.filters">
+	    <button type="button" class="btn btn-sm btn-outline dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+	      {{ filter.name }} <span class="caret"></span>
+	    </button>
+	    <ul class="dropdown-menu" role="menu">
+	      <li ng-show="filter.type === 'checkbox'">
+	        <a href="javascript:void(0)">
+	            <input ng-click="selectAllOptions(filter);" type="checkbox" ng-model="filter.allSelected"> Select all
+	        </a>
+	      </li>
+	      <li class="divider"></li>
+	      <li ng-repeat="option in filter.options | filter:chartFilter">
+	        <a href="javascript:void(0)">
+	          <input ng-click="filterChart();" type="{{ filter.type }}" ng-model="option.selected"> {{ option.name }}
+	        </a>
+	      </li>
+	    </ul>
+	  </div>
+	</div>
+	
+	<div class="pull-right card-option-menu">
+		<ul class="list-inline">
+			<li><i ng-click="deleteOption()" class="ti-trash"></i> <i ng-click="selectCardOption(config)" class="ti-settings"></i></li>
+		</ul>
+	</div>
+
+	<highchart id="chart1" config="config.chart" style="height: inherit; width: inherit;"></highchart>
+</div>

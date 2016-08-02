@@ -1,0 +1,21 @@
+<div ng-controller="CardOptionSettingsCtrl">
+
+    <!-- CHOOSE DATASOURCE -->
+    <div ng-show="loadingDatasources || $parent.cardOptionSelected.settings.loading" class="progress-circle-indeterminate m-t-45"></div>
+
+    <form ng-hide="loadingDatasources" id="form-work" class="form-horizontal ng-pristine ng-invalid ng-invalid-required" role="form" autocomplete="off" name="work" novalidate="">
+        <input ng-model="searchText" type="text" class="form-control m-b-10" placeholder="Search...">
+        <div class="form-group">
+            <div class="col-md-12">
+                <ul class="list-group list-scroll">
+                    <li class="list-group-item" ng-repeat="data in datasources | filter:searchText">
+                        <a ng-click="selectDatasource(data);" href="">{{ data.title }}</a>
+                        <i class="ti-eye m-t-5"></i>
+                        <i ng-show="hasDatasource(data);" class="m-t-5 ti-check pull-right"></i>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </form>
+
+</div>

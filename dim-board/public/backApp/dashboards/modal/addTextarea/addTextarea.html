@@ -1,0 +1,13 @@
+<div ng-form="Form.newTexarea" id="text-add-modal">
+	<div class="modal-header">
+		<button type="button" class="close pull-right" ng-click="$dismiss()" aria-hidden="true">&times;</button>
+		<h4 class="modal-title">Add Textarea</h4>
+	</div>
+	<div class="modal-body">
+		<summernote required name="textarea" ng-model="modalData.textarea" height="300"></summernote>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-default" ng-click="$dismiss()">Cancel</button>
+		<button type="button" class="btn btn-primary" ng-disabled="Form.newTexarea.$invalid" ng-click="addText()">Add</button>
+	</div>
+</div>

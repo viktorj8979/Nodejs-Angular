@@ -1,0 +1,123 @@
+<div ng-controller="DatasourcesListCtrl">
+	<!-- START PAGE -->
+	<div class="page" class="full-height">
+		<!-- START PAGE CONTENT WRAPPER -->
+		<div class="full-height">
+			<!-- START PAGE CONTENT -->
+			<div class="content" class="full-height">
+				<div class="container-fluid container-fixed-lg ng-scope">
+					<h2 class="pull-left m-l-15">{{datasources.length}} Datasources</h2>
+					<div class="toolbar-icon-bg pull-left m-t-15 m-l-15" id="toolbar-search">
+						<div class="input-group search-icon">
+							<i class="ti ti-search"></i>
+							<input ng-model="searchText" type="text" class="form-control" placeholder="Search...">
+						</div>
+				    </div>
+				    <button ng-if="user.permissions.Datasources.View && user.permissions.Datasources.Create" data-toggle="quickview" data-toggle-element="#addCardView" pg-manipulate data-hided-view="#chat" class="btn btn-primary pull-right m-t-15 m-r-15"><i class="fa fa-th"></i> Create a Datasource</button>
+				    <div class="clearfix"></div>
+					<div class="panel-heading">		
+						<div class="pull-left">
+							<ul class="list-inline">
+								<li>
+									<span>Sort By:</span>
+								</li>
+								<li ng-class="{ 'active': predicate === 'data.fileSettings.title'}">
+									<span ng-click="order('data.fileSettings.title')">Title</span>
+									<span class="sortorder" ng-show="predicate === 'data.fileSettings.title'" ng-class="{reverse:reverse}"></span>
+								</li>
+								<li ng-class="{ 'active': predicate === 'data.fileSettings.csv.file_name'}">
+									<span ng-click="order('data.fileSettings.csv.file_name')">CSV</span>
+									<span class="sortorder" ng-show="predicate === 'data.fileSettings.csv.file_name'" ng-class="{reverse:reverse}"></span>
+								</li>
+								<li ng-class="{ 'active': predicate === 'author.full_name'}">
+									<span ng-click="order('author.full_name')">Author</span>
+									<span class="sortorder" ng-show="predicate === 'author.full_name'" ng-class="{reverse:reverse}"></span>
+								</li>
+								<li ng-class="{ 'active': predicate === 'datetime_updated'}">
+									<span ng-click="order('datetime_updated')">Last Updated</span>
+									<span class="sortorder" ng-show="predicate === 'datetime_updated'" ng-class="{reverse:reverse}"></span>
+								</li>
+							</ul>
+						</div>
+						<div class="global-panel-action-right">
+							<ul class="list-inline" ng-if="user.permissions.Datasources.View && user.permissions.Datasources.Delete">
+					        	<li tooltip="Delete" class="button-icon has-bg">
+					        		<i ng-click="deleteAll()" class="ti ti-trash"></i>
+					        	</li>
+					        	<li tooltip="Select All" class="text-icon">
+						        	<input ng-click="selectAll(isAllSelected);" ng-model="isAllSelected" type="checkbox">
+						        </li>
+							</ul>
+						</div>
+					</div>
+					<div class="panel-body">
+						<table class="table table-details table-hover table-responsive">
+		                    <thead></thead>
+		                    <tbody>
+		                        <tr ng-repeat="data in datasources | filter:searchText | orderBy:predicate:reverse">
+									<td width="120">
+										<img width="120" class="thumbnail" alt="data.data.dataSettings.thumbnail" data-ng-src="{{ data.dataIntegration.image_path }}">
+									</td>
+									<td>
+										<span tooltip="Datasource">
+											<i class="fa fa-data-excel-o"></i> <b>{{ data.title }}</b>
+										</span><br>
+										<span tooltip="View Details">
+											<a href="" ng-click="viewDetails(data)" data-toggle="quickview" data-toggle-element="#datasourceView"><i class="ti-eye"></i> View Details</a>
+										</span>
+									</td>
+									<td>
+										<span tooltip="Last Author">
+											<i class="ti-user"></i> {{ data.modified_by.first_name }} {{ data.modified_by.last_name }}
+										</span><br>
+										<span tooltip="Last Updated">
+											<i class="ti-time"></i> {{ data.modified_on | date:'medium'}}
+										</span>
+									</td>
+									<td>
+										<span tooltip="Cards">
+											<i class="pg-charts"></i> 4 Cards
+										</span>
+									</td>
+									<td>
+										<ul class="list-inline pull-right">
+											<li tooltip="New card" ng-if="user.permissions.Datasources.View && user.permissions.Datasources.Create">
+												<span ng-click="createCard(data)" class="icon-stack" style="position: relative;">
+													<i class="pg-charts"></i>
+													<i class="fa fa-plus-circle" style="left: -9px; top: -2px;position: absolute;"></i>
+												</span>
+		                            		</li>
+		                            		<li tooltip="Replace" ng-click="replaceDatasource(data)" ng-if="user.permissions.Datasources.View && user.permissions.Datasources.Edit" pg-navigate data-view-port="#chat" data-view-animation="push-parrallax" data-view-elem="#addCardView" data-view-justAdd="true">
+		                            			<span class="icon-stack">
+												  <i class="ti-data"></i>
+												  <i class="fa fa-refresh"></i>
+												</span>
+											</li>
+											<li tooltip="Delete" ng-if="user.permissions.Datasources.View && user.permissions.Datasources.Delete">
+												<i ng-click="deleteDatasource(data)" class="ti-trash"></i>
+											</li>
+											<li>
+												<label tooltip="Select" ng-if="user.permissions.Datasources.View && user.permissions.Datasources.Delete">
+													<input ng-click="select(data)" type="checkbox" ng-checked="selected(data)">
+												</label>
+											</li>
+										</ul>
+									</td>
+								</tr>
+							</tbody>
+		                </table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END PAGE -->
+	<!--START DASHBOARD SETTINGS -->
+		<div ng-include src=" '../backApp/datasources/partial/datasources.add/datasources.add.html' " include-replace>
+		</div>
+	<!-- END DASHBOARD SETTINGS-->
+	<!-- START DATASOURCE DETAIL VIEW -->
+		<div ng-include src=" '../backApp/datasources/partial/datasources.view/datasources.view.html' " include-replace>
+		</div>
+	<!-- END DATASOURCE DETAIL VIEW -->
+</div>

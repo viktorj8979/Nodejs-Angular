@@ -1,0 +1,39 @@
+<div ng-controller="CardShareCtrl" class="quickview-wrapper" id="cardShare" pg-quickview>
+  <ul class="nav nav-tabs">
+    <h5>Share Cards</h5>
+  </ul>
+
+  <a class="btn-link quickview-toggle" data-toggle-element="#cardShare" data-toggle="quickview"><i class="pg-close"></i></a>
+
+  <div class="panel">
+    <div class="panel-heading">
+      <div class="panel-title word-break ng-binding">{{ $parent.selectedCard.title }}</div>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-sm-12">
+          <form id="form-work" class="form-horizontal ng-pristine ng-invalid ng-invalid-required" role="form" autocomplete="off" name="work" novalidate="">
+            <div class="form-group">
+              <label class="col-sm-3 control-label">url</label>
+              <div class="col-sm-9">
+                <div class="word-break">
+                  {{ url }}
+                </div>
+                <button id="copy-card-url" data-clipboard-text="{{ url }}" class="btn btn-complete btn-xs m-t-10">Copy</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">iframe</label>
+              <div class="col-sm-9">
+                <div class="word-break">
+                  {{ iframe }}
+                </div>
+                <button id="copy-card-iframe" data-clipboard-text="{{ iframe }}" class="btn btn-complete btn-xs m-t-10">Copy</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

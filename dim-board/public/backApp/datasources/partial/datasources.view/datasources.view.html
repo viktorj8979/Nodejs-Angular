@@ -1,0 +1,47 @@
+<div ng-controller="DatasourcesViewCtrl" id="datasourceView" class="quickview-wrapper" pg-quickview>
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs">
+    <h5>Datasource Details</h5>
+  </ul>
+  <a class="btn-link quickview-toggle" data-toggle-element="#datasourceView" data-toggle="quickview"><i class="pg-close"></i></a>
+  <div class="panel">
+    <div class="panel-heading">
+      <div class="panel-title word-break">{{$parent.viewDatasource.title}}</div>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-sm-12">
+          <form id="form-work" class="form-horizontal ng-pristine ng-invalid ng-invalid-required" role="form" autocomplete="off" name="work" novalidate="">
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Created By</label>
+              <div class="col-sm-8">
+                <p>{{$parent.viewDatasource.created_by.first_name}} {{$parent.viewDatasource.created_by.last_name}}</p>
+                <p class="hint-text small"><i class="ti-time"></i> {{ $parent.viewDatasource.created_on | date:'medium'}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Modified By</label>
+              <div class="col-sm-8">
+                <p>{{$parent.viewDatasource.modified_by.first_name}} {{$parent.viewDatasource.modified_by.last_name}}</p>
+                <p class="hint-text small"><i class="ti-time"></i> {{ $parent.viewDatasource.modified_on | date:'medium'}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Full Path</label>
+              <div class="col-sm-8">
+                <p class="word-break">{{$parent.viewDatasource.data_location}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">File Type</label>
+              <div class="col-sm-8">
+                <p class="word-break">{{$parent.viewDatasource.data_format}}</p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

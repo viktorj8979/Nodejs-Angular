@@ -1,0 +1,71 @@
+<!--START QUICKVIEW -->
+<div id="cardCommentView" class="quickview-wrapper" pg-quickview>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs">
+    </ul>
+    <a class="btn-link quickview-toggle" data-toggle-element="#cardCommentView" data-toggle="quickview"><i class="pg-close"></i></a>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <!-- BEGIN cards !-->
+        <div class="tab-pane fade in active no-padding" id="quickview-chat">
+            <div class="view-port clearfix" id="chat">
+                <!-- BEGIN Conversation View  !-->
+                <div class="view chat-view bg-white clearfix">
+                    <!-- BEGIN Header  !-->
+                    <div class="navbar navbar-default">
+                        <div class="navbar-inner">
+                            <div class="view-heading">
+                                Comments
+                                <div class="fs-11 hint-text">{{ selectedCard.title }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END Header  !-->
+                    <!-- BEGIN Conversation  !-->
+                    <div class="chat-inner" id="my-conversation">
+                        <div ng-repeat="comment in selectedCard.comments" class="message clearfix">
+                            <!-- BEGIN From Them Message  !-->
+                            <div ng-if="comment.user._id !== auth.profile.identities[0].user_id">
+                                <div class="profile-img-wrapper m-t-5 inline">
+                                    <img class="col-top" width="30" height="30" src="{{ comment.user.picture }}" alt="" data-src="{{ comment.user.picture }}" ui-jq="unveil" data-src-retina="{{ comment.user.picture }}">
+                                </div>
+                                <div class="chat-bubble from-them">
+                                    {{ comment.message }}
+                                </div>
+                            </div>
+                            <!-- END From Them Message  !-->
+
+                            <!-- BEGIN From Me Message  !-->
+                            <div ng-if="comment.user._id === auth.profile.identities[0].user_id" class="chat-bubble from-me">
+                                {{ comment.message }}
+                            </div>
+                            <!-- END From Me Message  !-->
+                        </div>
+                        <!-- END From Them Message  !-->
+                    </div>
+                    <!-- BEGIN Conversation  !-->
+                    <!-- BEGIN Chat Input  !-->
+                    <div class="b-t b-grey bg-white clearfix p-l-10 p-r-10">
+                        <div class="row">
+                            <div class="col-xs-1 p-t-15">
+                                <a href="" class="link text-master"><i class="fa fa-plus-circle"></i></a>
+                            </div>
+                            <div class="col-xs-8 no-padding">
+                                <form ng-submit="addComment(selectedCard)">
+                                  <input type="text" name="comment" ng-model="comment" class="form-control chat-input" data-chat-input="" data-chat-conversation="#my-conversation" placeholder="Say something">
+                                  <input class="ng-hide" type="submit" id="submit" value="Submit" />
+                                </form>
+                            </div>
+                            <div class="col-xs-2 link text-master m-l-10 m-t-15 p-l-10 b-l b-grey col-top">
+                                <a href="" class="link text-master"><i class="pg-camera"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END Chat Input  !-->
+                </div>
+                <!-- END Conversation View  !-->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END QUICKVIEW-->

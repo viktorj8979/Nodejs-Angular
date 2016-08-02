@@ -1,0 +1,33 @@
+<div ng-controller="DashboardsCreateCtrl" class="min-full-height" id="dashboard-wrapper" ng-style="applyTheme(dashboard.settings.theme, dashboard.settings.newTheme)" ng-class="{'inverted': (dashboard.settings.theme.data.invert_color && (!dashboard.settings.newTheme || !dashboard.settings.newTheme.data)) || (dashboard.settings.newTheme && dashboard.settings.newTheme.data && dashboard.settings.newTheme.data && dashboard.settings.newTheme.data.invert_color)
+}">
+    <!-- START PAGE -->
+    <div class="page" class="full-height">
+        <!-- START PAGE CONTENT WRAPPER -->
+        <div class="full-height">
+            <!-- START PAGE CONTENT -->
+            <div class="content" class="full-height">
+                <div ng-include src=" '../backApp/dashboards/partial/dashboards.view/dashboards.view.html' " include-replace>
+            </div>
+            <!-- END PAGE CONTENT -->
+        </div>
+        <!-- END PAGE CONTENT WRAPPER -->
+        <div class="full-height" ng-if="is('app.builder')" ng-include=" '../backApp/tpl/blocks/builder_content.html' "></div>
+    </div>
+    <!-- END PAGE -->
+    <!--START COMMENTVIEW -->
+    <div ng-include src=" '../backApp/dashboards/partial/dashboards.card.comment/dashboards.card.comment.html' " include-replace>
+    </div>
+    <!-- END COMMENTVIEW-->
+    <!--START CARDVIEW -->
+    <div ng-include src=" '../backApp/dashboards/partial/dashboards.add.card/dashboards.add.card.html' " include-replace>
+    </div>
+    <!-- END CARDVIEW-->
+    <!--START DASHBOARD SETTINGS -->
+    <div ng-include src=" '../backApp/dashboards/partial/dashboards.settings/dashboards.settings.html' " include-replace>
+    </div>
+    <!-- END DASHBOARD SETTINGS-->
+    <!-- START OVERLAY -->
+    <!-- <div ng-include src=" '../backApp/tpl/blocks/quick_search.html' " include-replace> -->
+    <!-- </div> -->
+    <!-- END OVERLAY -->
+</div>

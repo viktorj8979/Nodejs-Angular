@@ -1,0 +1,69 @@
+<div class="full-height">
+	
+	<div ng-class="cardConfig.settings.classes" class="widget-{{ cardConfig.widget }} panel no-border no-margin" pg-portlet progress="{{ cardConfig.settings.progress }}" overlay-color="{{ cardConfig.settings.overlay.color }}" overlay-opacity="{{ cardConfig.settings.overlay.opacity }}" on-refresh="refreshTest('.widget-1')">
+		<div class="card-container container-sm-height full-height">
+			<div class="row-sm-height" ng-if="!cardEdit">
+				<div class="col-sm-height col-top">
+					<div class="panel-heading ">
+						<div class="panel-title text-black hint-text">
+							<span class="font-montserrat fs-11 all-caps">Page Views <i class="fa fa-chevron-right"></i>
+							</span>
+						</div>
+						<div class="panel-controls">
+							<ul>
+								<li class="hidden-xlg">
+									<div class="dropdown"> <a data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"> <i class="portlet-icon portlet-icon-settings"></i> </a>
+										<ul class="dropdown-menu pull-right" role="menu">
+											<li><a href="">Share</a> </li>
+											<li ng-click="copyCard(card)"><a href="">Duplicate</a>
+											</li> <li><a href="">Export</a> </li>
+											<li ng-click="deleteCard(card)"><a href="">Delete</a>
+											</li>
+										</ul>
+									</div>
+								</li>
+								<li><a ng-click="refresh()" class="portlet-refresh text-black" data-toggle="refresh"><i class="portlet-icon portlet-icon-refresh"></i></a> </li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="utility-bar">
+	    <div tooltip="{{ cardConfig.created_by.name }}" class="thumbnail-wrapper d32 circular b-white b-a b-white pull-left">
+	        <img width="35" height="35" ui-jq="unveil" data-src-retina="{{ cardConfig.created_by.picture || $parent.user.picture }}" data-src="{{ cardConfig.created_by.picture || $parent.user.picture }}" alt="{{ cardConfig.created_by.name }}">
+	    </div>
+	    <ul class="list-inline pull-right">
+	        <li>
+	            <!-- START Card Link -->
+	            <div class="btn-group dropup" dropdown keyboard-nav>
+	                <button id="linkCards" type="button" class="btn text-master hint-text" dropdown-toggle>
+	                    <span tooltip="links">0 <i class="fa fa-chain-broken"></i></span>
+	                </button>
+	                <ul class="dropdown-menu" role="menu" aria-labelledby="linkCards">
+	                    <li role="menuitem"><a href="" ng-click="linkCharts($event, item);">Link Cards</a></li>
+	                    <li role="menuitem"><a href="" ng-click="linkCharts($event, item);">Unlink Cards</a></li>
+	                </ul>
+	            </div>
+	            <!-- END Card Link -->
+	        </li>
+	        <li tooltip="alerts">
+	            <a class="text-master hint-text" href="">{{ cardConfig.alerts.length }} 
+	                <i class="fa fa-bell-o"></i>
+	            </a>
+	        </li>
+	        <li ng-click="selectCard(card);" data-toggle="quickview" data-toggle-element="#cardCommentView" tooltip="comments">
+	            <a class="text-master hint-text" href="">{{ cardConfig.comments.length }} 
+	                <i class="fa fa-comment-o"></i>
+	            </a>
+	        </li>
+	        <li>
+	            <img class="data-source-icon" src="{{ cardConfig.datasources[0].data_integration.image_path }}" />
+	        </li>
+	    </ul>
+	    <div class="clearfix"></div>
+	</div>
+
+</div>

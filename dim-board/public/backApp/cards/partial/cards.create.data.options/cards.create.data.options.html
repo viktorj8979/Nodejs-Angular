@@ -1,0 +1,54 @@
+<div id="step-data-options" ng-controller="CardsCreateDataOptionsCtrl">
+
+    <!-- CHOOSE DATA OPTIONS -->
+    <form ng-show="$parent.cardOptionSelected.type === 'highchart' && !$parent.cardOptionSelected.settings.loading" id="form-work" class="form-horizontal ng-pristine ng-invalid ng-invalid-required" role="form" autocomplete="off" name="work" novalidate="">
+
+        <div class="form-group">
+            <div class="col-sm-12 m-b-10">
+                <label>X-axis</label>
+                <select ng-model="$parent.cardOptionSelected.settings.selected.categories" class="form-control" ng-options="category as category.name for category in data.categories track by category.key">
+                    <option value="">Select X-axis</option>
+                </select>
+            </div>
+	        <div class="col-sm-12 m-b-10">
+	            <label>Y-axis</label>
+	            <select ng-model="$parent.cardOptionSelected.settings.selected.values" class="form-control" ng-options="value as value.name for value in data.values track by value.key">
+	                <option value="">Select Y-axis</option>
+	            </select>
+	        </div>
+	        <div ng-if="$parent.cardOptionSelected.settings.table.columns.length > 2" class="col-sm-12 m-b-10">
+	            <label>Drilldown</label>
+	            <select ng-model="$parent.cardOptionSelected.settings.selected.subcategories" class="form-control" ng-options="category as category.name for category in data.categories track by category.key">
+	                <option value="">Select Drilldown</option>
+	            </select>
+	        </div>
+	    </div>
+    </form>
+
+    <form ng-show="$parent.cardOptionSelected.type === 'table'" id="form-work" class="form-horizontal ng-pristine ng-invalid ng-invalid-required" role="form" autocomplete="off" name="work" novalidate="">
+
+        <div class="form-group">
+            <div class="col-sm-12">
+                <label>Columns</label>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <input ng-model="searchText" type="text" class="form-control m-b-10" placeholder="Search...">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <ul class="list-group list-scroll">
+                            <li class="list-group-item" ng-repeat="category in data.categories | filter:searchText">
+                                <div class="checkbox check-success">
+                                    <input type="checkbox" ng-click="addColumn(category);" ng-checked="" value="1" id="{{ category.key }}">
+                                    <label for="{{ category.key }}">{{ category.name }}</label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>

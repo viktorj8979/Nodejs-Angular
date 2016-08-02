@@ -1,0 +1,27 @@
+<div ng-show="$parent.activeStep === 'filters'" id="step-filters" ng-controller="CardsCreateFiltersCtrl">
+
+    <!-- FILTERS -->
+    <form id="form-work" class="form-horizontal ng-pristine ng-invalid ng-invalid-required" role="form" autocomplete="off" name="work" novalidate="">
+        <div class="col-sm-12">
+            <input ng-model="searchText" type="text" class="form-control m-b-10" placeholder="Search...">
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <label>Columns</label>
+                    <div class="checkbox checkbox-default pull-right">
+                        <input id="selectAll"  data-ng-click="selectAllColumns();" class="styled" type="checkbox">
+                        <label for="selectAll">
+                            Select All
+                        </label>
+                    </div>
+                    <div class="clearfix"></div>
+                    <ul class="list-group list-scroll">
+                        <li data-ng-click="selectColumn($event, column);" class="list-group-item" ng-repeat="column in columns | filter:searchText">
+                            <span>{{ column.name }}</span> <i ng-show="selectedColumn(column)" class="ti-check pull-right m-t-10"></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>

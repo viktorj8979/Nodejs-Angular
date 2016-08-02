@@ -1,0 +1,132 @@
+<div ng-controller="MembersListCtrl">
+    <!-- START PAGE -->
+    <div class="page" class="full-height">
+        <!-- START PAGE CONTENT WRAPPER -->
+        <div class="full-height">
+            <!-- START PAGE CONTENT -->
+            <div class="content" class="full-height">
+				<div class="container-fluid container-fixed-lg ng-scope">
+					<h2 class="pull-left m-l-15">{{ members.length }} Members</h2>
+		        	<div class="toolbar-icon-bg pull-left m-t-15 m-l-15" id="toolbar-search">
+				        <div class="input-group search-icon">
+			            	<i class="ti ti-search"></i>
+							<input ng-model="searchText" type="text" class="form-control" placeholder="Search...">
+						</div>
+				    </div>
+				    <button ui-sref="member.create" class="btn btn-primary pull-right m-t-15 m-r-15" ng-if="user.permissions.Members.View && user.permissions.Members.Create"><i class="fa fa-th"></i> Create a Member</button>
+				    <div class="clearfix"></div>
+					<div class="panel-heading">						
+						<div class="pull-left">
+				        	<ul class="list-inline">
+						        <li class="ml-20 mr-0">
+						        	<span>Sort By:</span>
+						        </li>
+						        <li ng-class="{ 'active': predicate === 'first_name'}">
+						        	<span ng-click="order('first_name')">Name</span>
+						        	<span class="sortorder" ng-show="predicate === 'first_name'" ng-class="{reverse:reverse}"></span>
+						        </li>
+						        <li ng-class="{ 'active': predicate === 'email'}">
+						        	<span ng-click="order('email')">Email</span>
+						        	<span class="sortorder" ng-show="predicate === 'email'" ng-class="{reverse:reverse}"></span>
+						        </li>
+						        <li ng-class="{ 'active': predicate === 'role'}">
+						        	<span ng-click="order('role')">Role</span>
+						        	<span class="sortorder" ng-show="predicate === 'role'" ng-class="{reverse:reverse}"></span>
+						        </li>
+						    </ul>
+						</div>
+						<div class="global-panel-action-right">
+							<ul class="list-inline" ng-if="user.permissions.Members.View && user.permissions.Members.Delete">
+								<li>
+									<span tooltip="Delete">
+						        		<i ng-click="deleteAllSelectedMembers()" class="ti-trash"></i>
+						        	</span>
+								</li>
+								<li>
+									<label tooltip="Select">
+										<input type="checkbox" ng-click="selectAllMembers(selectAll);" ng-model="selectAll">
+									</label>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="panel-body">
+						<table class="table table-details table-hover table-responsive">
+		                    <thead></thead>
+		                    <tbody>
+		                        <tr ng-form="Form.userEditable{{$index}}" ng-repeat="member in members | filter:searchText | orderBy:predicate:reverse" ng-init="member.edit = false;">
+		                            <td width="120">
+		                            	<span class="thumbnail-wrapper d60 circular inline">
+						                    <img alt="" data-src="{{ member.picture }}" ui-jq="unveil" data-src-retina="{{ member.picture }}" width="38" height="38">
+						                </span>
+		                            </td>
+		                            <td>
+		                            	<span tooltip="Member">
+		                            		<i class="ti-user"></i> 
+		                            		<span ng-hide="member.edit">{{ member.first_name }} {{ member.last_name }}</span>
+		                            		<span ng-show="member.edit" class="inline">
+			                            		<input class="form-control" ng-show="member.edit" name="fullName" type="text" ng-model="member.fullName" required>
+			                            		<div class="input-error-wrapper" ng-show="member.edit && Form.userEditable{{$index}}.fullName.$dirty && Form.userEditable{{$index}}.fullName.$invalid" role="alert">
+			                            		    <small class="error" ng-show="member.edit && Form.userEditable{{$index}}.fullName.$error.required">This field is required</small>
+			                            		</div>
+		                            		</span>
+		                            	</span>
+		                            </td>
+		                            <td>
+		                            	<span tooltip="Email">
+		                            		<i class="ti-email"></i> 
+		                            		<span ng-hide="member.edit">{{ member.email }}</span>
+		                            		<span ng-show="member.edit" class="inline">
+			                            		<input class="form-control" ng-show="member.edit" name="email" type="email" ng-model="member.email" required>
+												<div class="input-error-wrapper" ng-show="member.edit && Form.userEditable{{$index}}.email.$dirty && Form.userEditable{{$index}}.email.$invalid" role="alert">
+												    <small class="error" ng-show="member.edit && Form.userEditable{{$index}}.email.$error.required">This field is required</small>
+												    <small class="error" ng-show="member.edit && Form.userEditable{{$index}}.email.$error.email">Enter a valid email</small>
+												</div>
+		                            		</span>
+		                            	</span>
+		                            </td>
+		                            <td>
+		                            	<span tooltip="Role">
+		                            		<i class="ti-key inline"></i> 
+		                            		<span ng-hide="member.edit">{{ showRole(member.role._id) }}</span>
+		                            		<span ng-show="member.edit" class="inline">
+		                            			<select class="form-control" name="role" ng-model="member.role._id" ng-options="role._id as role.name for role in roles" required>
+		                            				<option></option>
+		                            			</select>
+		                            			<div class="input-error-wrapper" ng-show="member.edit && Form.userEditable{{$index}}.role.$dirty && Form.userEditable{{$index}}.role.$invalid" role="alert">
+		                            			    <small class="error" ng-show="member.edit && Form.userEditable{{$index}}.role.$error.required">This field is required</small>
+		                            			</div>
+		                            		</span>
+		                            	</span>
+		                            </td>
+		                            <td>
+		                            	<ul class="list-inline pull-right">
+		                            		<li ng-show="member.edit">
+		                            			<button tooltip="Save" ng-disabled="Form.userEditable{{$index}}.$invalid" ng-click="updateMember(member)" class="btn btn-success btn-sm"><i class="ti-check"></i> Save</button>
+		                            		</li>
+		                            		<li ng-show="member.edit">
+		                            			<button  tooltip="Cancel" ng-click="cancelMemberUpdate(member)" class="btn btn-danger btn-sm"><i class="ti-close"></i> Cancel</button>
+		                            		</li>
+		                            		<li ng-hide="member.edit" ng-if="user.permissions.Members.View && user.permissions.Members.Edit" ng-click="editMember(member)" tooltip="Edit">
+		                            			<i class="ti-pencil-alt"></i>
+		                            		</li>
+		                            		<li ng-hide="member.edit"  tooltip="Delete" ng-if="user.permissions.Members.View && user.permissions.Members.Delete">
+		                            			<i ng-click="deleteMember(member)" class="ti-trash"></i>
+		                            		</li>
+		                            		<li ng-hide="member.edit" ng-if="user.permissions.Members.View && user.permissions.Members.Delete">
+												<label tooltip="Select">
+													<input type="checkbox" ng-click="selectMember(member)" ng-checked="selected(member)" checked>
+												</label>
+				                            </li>
+				                        </ul>
+		                            </td>
+		                        </tr>
+		                    </tbody>
+		                </table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END PAGE -->
+</div>
